@@ -1,0 +1,7 @@
+[h1]Description[/h1]
+A game mode that in which you can configure:
+- Exact number of waves, from 0 to 255
+- Exact type and number of zeds to spawn at each wave
+- Difficulty scaling for each wave, including zeds' health, speed, resistance, damage
+- Self defined random waves
+- Multiple bosses

@@ -1,0 +1,2 @@
+## Compile
+./tools/builder -c

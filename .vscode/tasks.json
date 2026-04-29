@@ -1,0 +1,27 @@
+{
+    // See https://go.microsoft.com/fwlink/?LinkId=733558
+    // for the documentation about the tasks.json format
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "Build Mod",
+            "type": "shell",
+            "command": "./tools/builder -c",
+            "options": {
+                "shell": {
+                    "executable": "bash.exe",
+                    "args": [
+                        "--login",
+                        "-c"
+                    ]
+                }
+            },
+            "group": "build",
+            "presentation": {
+                "reveal": "always",
+                "panel": "shared"
+            },
+            "problemMatcher": []
+        }
+    ]
+}
