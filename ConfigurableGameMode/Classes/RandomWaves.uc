@@ -62,7 +62,6 @@ private function GroupSpawns()
         }
     }
 
-
     SortedSpawns.Sort(SortSpawnEntry);
     SortedSpawnGroups.Sort(SortSpawnGroups);
     

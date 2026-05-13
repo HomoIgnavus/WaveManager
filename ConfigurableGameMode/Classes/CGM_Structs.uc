@@ -26,7 +26,9 @@ struct GameSetup
     var int InitialDosh;
     var int TraderTime;
     var bool bStartWithTrader;
+    var int InitialTraderTime;
     var float XpScale;
+    var float ExtraXpPerWave;
     var float DoshScale;
     var float ExtraSpawnPerWave;
     var float ExtraSpawnPerPlayer;

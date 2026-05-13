@@ -1,3 +1,5 @@
+// a scrake with no AI controller, and refills health every second. Used for testing player damage
+
 class CGM_DummyScrake extends KFPawn_ZedScrake;
 
 var protected float MaxHealth;
@@ -31,7 +33,7 @@ function Timer_RegenerateHealth()
         HitZones[HZI_HEAD].GoreHealth = MaxHealth;
         HitZones[HZI_HEAD].MaxGoreHealth = MaxHealth;
         
-        `log("CGM_DummyScrake: health=" @ Health);
+        // `log("CGM_DummyScrake: health=" @ Health);
     }
 }
 

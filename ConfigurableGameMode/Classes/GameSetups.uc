@@ -7,7 +7,9 @@ var public config Array<EntryInt> MaxWave;
 var public config Array<EntryInt> InitialDosh;
 var public config Array<EntryInt> TraderTime;
 var public config Array<EntryBool> bStartWithTrader;
+var public config Array<EntryInt> InitialTraderTime;
 var public config Array<EntryFloat> XpScale;
+var public config Array<EntryFloat> ExtraXpPerWave;
 var public config Array<EntryFloat> DoshScale;
 var public config Array<EntryFloat> ExtraSpawnPerWave;
 var public config Array<EntryFloat> ExtraSpawnPerPlayer;
@@ -96,6 +98,16 @@ public static function GameSetup GenSetup(int SetupNum)
     }
     `log("GameSetups.GenSetup() bStartWithTrader:" @ Setup.bStartWithTrader);
 
+    foreach default.InitialTraderTime(IntEntry)
+    {
+        if (IntEntry.Setup == SetupNum)
+        {
+            Setup.InitialTraderTime = IntEntry.Value;
+            break;
+        }
+    }   
+    `log("GameSetups.GenSetup() InitialTraderTime:" @ Setup.InitialTraderTime);
+
     foreach default.XpScale(FloatEntry)
     {
         if (FloatEntry.Setup == SetupNum)
@@ -105,6 +117,16 @@ public static function GameSetup GenSetup(int SetupNum)
         }
     }
     `log("GameSetups.GenSetup() XpScale:" @ Setup.XpScale);
+
+    foreach default.ExtraXpPerWave(FloatEntry)
+    {
+        if (FloatEntry.Setup == SetupNum)
+        {
+            Setup.ExtraXpPerWave = FloatEntry.Value;
+            break;
+        }
+    }
+    `log("GameSetups.GenSetup() ExtraXpPerWave:" @ Setup.ExtraXpPerWave);
 
     foreach default.DoshScale(FloatEntry)
     {

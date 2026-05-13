@@ -3,7 +3,9 @@ class CGM_Survival extends KFGameInfo_Survival;
 var config int CustomNumWaves;
 var config int CustomWaveMax;
 var config int TotalZedsBase;
+var config bool bIsFirstTrader;
 
+var private int InitialTraderTime;
 var private int MaxZedsRecord;
 
 const GameSetupObj = class'GameSetups';
@@ -15,10 +17,21 @@ event InitGame( string Options, out string ErrorMessage )
 	SetupIndex = self.GetIntOption(Options, "Setup", 0);
 
     `log("CGM_Survival.InitGame()");
- 	Super.InitGame( Options, ErrorMessage );
-	GameDifficulty = 3;
 	CurrentGameSetup = GameSetupObj.static.GenSetup(SetupIndex);
 	MaxZedsRecord = 0;
+	bIsFirstTrader = true;
+
+	// Append XP scaling options BEFORE calling Super.InitGame so mutators can see them
+	Options = Options @ "?XpScale=" @ CurrentGameSetup.XpScale @ "?ExtraXpPerWave=" @ CurrentGameSetup.ExtraXpPerWave;
+	`log("CGM_Survival.InitGame() - Appended Options:" @ Options);
+	
+	GameDifficulty = 3;
+ 	Super.InitGame( Options, ErrorMessage );
+}
+
+function AddServerExtMut()
+{
+
 }
 
 event PreBeginPlay()
@@ -35,11 +48,30 @@ event PostBeginPlay()
 
 	bIsCastleVolterMap = Caps(WorldInfo.GetMapName(true)) == "KF-CASTLEVOLTER";
 
-	TimeBetweenWaves = CurrentGameSetup.TraderTime;
+	TimeBetweenWaves = CurrentGameSetup.InitialTraderTime > 0 ? CurrentGameSetup.InitialTraderTime : InitialTraderTime;
 
 	bGunGamePlayerOnLastGun = false;
 
 	UpdateBonfires();
+}
+
+function SetupNextTrader()
+{
+    super.SetupNextTrader();
+    
+    TimeBetweenWaves = GetTraderTime();
+    `log("CGM_Survival.SetupNextTrader() - TimeBetweenWaves set to: " @ TimeBetweenWaves);
+}
+
+function float GetTraderTime()
+{
+	if (bIsFirstTrader && CurrentGameSetup.bStartWithTrader) 
+	{	
+		bIsFirstTrader = false;
+		return CurrentGameSetup.InitialTraderTime > 0 ? CurrentGameSetup.InitialTraderTime : InitialTraderTime;
+	}
+
+	return CurrentGameSetup.TraderTime;
 }
 
 function StartMatch()
@@ -340,4 +372,9 @@ event Broadcast(Actor Sender, coerce string Msg, optional name Type)
 	{
 	
 	}
+}
+
+defaultproperties
+{
+	InitialTraderTime = 60
 }

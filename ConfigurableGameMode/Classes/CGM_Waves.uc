@@ -67,6 +67,7 @@ public function Array<SpawnInfo> GetSpawnList(int WaveIdx, int WaveNum, int Play
         Info.ZedClass = class<KFPawn_Monster>(DynamicLoadObject(SpawnEntry.ZedClass, class'Class'));
         if (Info.ZedClass == None)
         {
+            `log("CGM_Waves.GetSpawnList() - failed to load: " @ SpawnEntry.ZedClass);
             continue;
         }
 
